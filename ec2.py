@@ -92,7 +92,7 @@ class EncryptEC2:
                 'MaxAttempts': self._max_attempts
             }
         )
-        print(f"{self.instance_id} stopped")
+        print(f"-- {self.instance_id} stopped")
 
     def detach_volume(self):
         """ Detach the EBS volumes attached to EC2, if they are unencrypted"""
@@ -249,8 +249,10 @@ class EncryptEC2:
             self.attach_volume(volume_ids=encrypted_volumes)
             self.start_instance()
             self.delete_snapshots(snapshot_list=snapshots)
-            self.start_instance()
 
 
 if __name__ == "__main__":
-    EncryptEC2(instance_id='abcs').start_encryption()
+    instance_id = input("Enter instance id: ")
+    region_id = input("Enter region: ")
+    profile = input("Enter profile: ")
+    EncryptEC2(instance_id=instance_id, region=region_id, profile=profile).start_encryption()
